@@ -13,8 +13,15 @@ export default defineConfig({
     },
   },
   build: {
+    // 清除console和debugger
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
     lib: {
-      entry: resolve(__dirname, "packages/index.js"),
+      entry: resolve("packages/index.js"),
       name: "vue-extends-element-ui",
     },
     rollupOptions: {
@@ -27,6 +34,6 @@ export default defineConfig({
         },
       },
     },
-    outDir: resolve(__dirname, "lib"),
+    outDir: resolve("lib"),
   },
 });
