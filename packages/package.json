@@ -1,5 +1,5 @@
 {
-  "name": "vue-extends-element-ui-1",
+  "name": "vue-extends-element-ui",
   "version": "1.0.0",
   "description": "基于element-ui二次开发的form、table",
   "main": "./vue-extends-element-ui.umd.js",
