@@ -1,10 +1,13 @@
 <template>
   <div class="app">
     <table-ui :columns="columns" />
+    <Form />
   </div>
 </template>
 
 <script>
+import Form from "../packages/Form.vue";
+
 export default {
   data() {
     return {
@@ -32,6 +35,9 @@ export default {
     };
   },
   mounted() {},
+  components: {
+    Form,
+  },
 };
 </script>
 

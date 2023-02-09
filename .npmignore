@@ -1,6 +1,7 @@
 # 忽略目录
 public/
 .vscode/
+src/
 #忽略指定文件
 vite.config.js
 babel.config.js
