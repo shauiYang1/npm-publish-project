@@ -1,6 +1,6 @@
 {
   "name": "vue-extends-element-ui",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "private": false,
   "scripts": {
     "dev": "vite",
@@ -29,5 +29,13 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shauiYang1/npm-publish-project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shauiYang1/npm-publish-project/issues"
+  },
+  "homepage": "https://github.com/shauiYang1/npm-publish-project#readme"
 }

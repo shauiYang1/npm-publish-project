@@ -3,44 +3,62 @@
     class="el-form-ui"
     :model="form"
     :label-width="labelWidth"
+    :label-position="labelPosition"
     :rules="rules"
     ref="FormRef"
     :inline="true"
   >
     <el-row :gutter="gutter" type="flex" :justify="justify" class="flex-wrap">
       <el-col
-        :span="formItem.span"
+        :span="formItem.span || 6"
         v-for="formItem in formData"
         :key="formItem.key"
       >
         <el-form-item
           :label="formItem.label"
           :prop="formItem.name"
-          :style="{ '--labelWidth': labelWidth }"
+          :style="{
+            '--labelWidth':
+              labelPosition === 'top'
+                ? 0
+                : formItem['labelWidth'] || labelWidth,
+          }"
         >
           <component
+            v-if="formItem.childComponent"
             :is="formItem.component"
             v-model="form[formItem.name]"
             v-bind="{ ...$attrs, ...formItem.props }"
+            v-on="{ ...formItem.events }"
           >
             <template v-if="formItem.childComponent">
               <component
                 :is="formItem.childComponent"
                 v-for="option in formItem.options"
                 :key="option.key"
+                :value="
+                  formItem?.childProps
+                    ? option[formItem?.childProps.value]
+                    : option.value
+                "
+                :label="
+                  formItem?.childProps
+                    ? option[formItem?.childProps.label]
+                    : option.label
+                "
                 v-bind="{ ...option }"
               />
             </template>
           </component>
+          <component
+            v-else
+            :is="formItem.component"
+            v-model="form[formItem.name]"
+            v-on="{ ...formItem.events }"
+            v-bind="{ ...formItem.props }"
+          />
         </el-form-item>
       </el-col>
-      <slot name="option">
-        <el-col :span="1" :offset="1">
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">查询</el-button>
-          </el-form-item>
-        </el-col>
-      </slot>
     </el-row>
   </el-form>
 </template>
@@ -51,6 +69,12 @@ export default {
     formData: {
       type: Array,
       default: () => [],
+      required: true,
+    },
+    form: {
+      type: Object,
+      default: () => {},
+      required: true,
     },
     labelWidth: {
       type: [String, Number],
@@ -68,26 +92,14 @@ export default {
       type: String,
       default: "start",
     },
+    labelPosition: {
+      type: String,
+      default: "left",
+    },
   },
-  data() {
-    return {
-      form: {},
-    };
-  },
-  beforeMount() {
-    this.initFormModel();
-  },
+  beforeMount() {},
   computed: {},
   methods: {
-    initFormModel() {
-      this.formData.forEach((element) => {
-        if (element.key === "checkboxGroup") {
-          this.$set
-            ? this.$set(this.form, element.key, [])
-            : (this.form[element.key] = []);
-        }
-      });
-    },
     onSubmit() {
       console.log("onSubmit", this.form);
     },
@@ -107,9 +119,11 @@ export default {
 .el-form-ui :deep(.el-col .el-form-item__content) {
   width: calc(100% - var(--labelWidth));
 }
+
 .el-form-ui :deep(.el-col .el-form-item__content .el-select) {
   width: 100%;
 }
+
 .el-form-ui :deep(.el-col .el-form-item__content .el-date-editor.el-input) {
   width: 100%;
 }

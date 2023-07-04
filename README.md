@@ -45,6 +45,9 @@ formData: { // 参数结构
       component: 'el-input',
       span: 6,
       props: { placeholder: '请输入姓名', clearable: true }
+      events: {
+        change: ()=>{},
+      },
     },
     {
       name: 'account',
@@ -53,6 +56,9 @@ formData: { // 参数结构
       component: 'el-input',
       span: 6,
       props: { placeholder: '请输入姓名', clearable: true }
+      events: {
+        change: ()=>{},
+      },
     },
     {
       name: 'org',
@@ -62,7 +68,11 @@ formData: { // 参数结构
       component: 'el-select',
       props: { placeholder: '请选择职位' },
       childComponent: 'el-option',
-      options: [{ label: '职位1', value: 1 }, { label: '职位2', value: 0 }]
+      childProps: { label: "name", value: "code" }, // 可自定义options子组件的中label、value的key
+      options: [{ label: '职位1', code: 1 }, { label: '职位2', code: 0 }]
+      events: {
+        change: ()=>{},
+      },
     },
     {
       name: 'date',
@@ -71,6 +81,9 @@ formData: { // 参数结构
       label: '日期选择',
       component: 'el-date-picker',
       props: { placeholder: '选择时间' }
+      events: {
+        change: ()=>{},
+      },
     },
     {
       name: 'time',
@@ -79,6 +92,9 @@ formData: { // 参数结构
       label: '时间选择',
       component: 'el-time-picker',
       props: { placeholder: '选择时间' }
+      events: {
+        change: ()=>{},
+      },
     },
     {
       name: 'checkboxGroup',
@@ -88,6 +104,9 @@ formData: { // 参数结构
       component: 'el-checkbox-group',
       childComponent: 'el-checkbox', // 渲染的子组件
       options: [{ label: '启用', name: 'type', key: 'city' }, { label: '封存', name: 'type', key: 'city1' }] // 子组件的数据及属性配置
+      events: {
+        change: ()=>{},
+      },
     },
     {
       name: 'selectTree', // formItem绑定prop(关系到数据的提交值)
@@ -107,8 +126,18 @@ formData: { // 参数结构
             }]
           }]
       }
+      events: {
+        change: ()=>{},
+      },
     }
-  ]
+  ],
+  required: true,
+},
+//  表单数据处理（上个版本在组件内部，考虑到不同的业务场景决定当作参数传递。）
+form: {
+  type: Object,
+  default: () => {},
+  required: true,
 },
 labelWidth: {
   type: [String, Number],
@@ -128,6 +157,11 @@ rules: {
 justify: {
   type: String,
   default: 'start'
+}
+// labelPosition位置
+labelPosition: {
+  type: String,
+  default: 'left'
 }
 
 ```
