@@ -230,4 +230,3 @@ export default {
 ```
 
 
-[github](https://github.com/shauiYang1/vue-extends-element-ui)
