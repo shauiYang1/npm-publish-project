@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <table-ui :columns="columns" />
+    <table-ui :columns="columns" :data="data" />
     <Form :formData="formData" :form="form" />
   </div>
 </template>
@@ -20,16 +20,121 @@ export default {
           fixed: "left",
         },
         {
-          dataIndex: "assName",
-          label: "积分类别",
+          dataIndex: "date",
+          label: "日期",
+          width: "80",
+          fixed: "left",
+        },
+        {
+          dataIndex: "Delivery Info",
+          label: "Delivery Info",
           minWidth: "150",
           fixed: "left",
+          children: [
+            {
+              dataIndex: "name",
+              label: "name",
+              minWidth: "120",
+              fixed: "left",
+            },
+            {
+              dataIndex: "address",
+              label: "地址",
+              minWidth: "120",
+              fixed: "left",
+
+              children: [
+                {
+                  dataIndex: "state",
+                  label: "state",
+                  minWidth: "150",
+                  fixed: "left",
+                },
+                {
+                  dataIndex: "city",
+                  label: "city",
+                  minWidth: "150",
+                  fixed: "left",
+                },
+                {
+                  dataIndex: "address",
+                  label: "address",
+                  minWidth: "150",
+                  fixed: "left",
+                },
+                {
+                  dataIndex: "zip",
+                  label: "zip",
+                  minWidth: "150",
+                  fixed: "left",
+                },
+              ],
+            },
+          ],
         },
         {
           dataIndex: "assConfigName",
           label: "积分内容",
           minWidth: "300",
           "show-overflow-tooltip": true,
+        },
+      ],
+      data: [
+        {
+          date: "2016-05-03",
+          name: "Tom",
+          state: "California",
+          city: "Los Angeles",
+          address: "No. 189, Grove St, Los Angeles",
+          zip: "CA 90036",
+        },
+        {
+          date: "2016-05-02",
+          name: "Tom",
+          state: "California",
+          city: "Los Angeles",
+          address: "No. 189, Grove St, Los Angeles",
+          zip: "CA 90036",
+        },
+        {
+          date: "2016-05-04",
+          name: "Tom",
+          state: "California",
+          city: "Los Angeles",
+          address: "No. 189, Grove St, Los Angeles",
+          zip: "CA 90036",
+        },
+        {
+          date: "2016-05-01",
+          name: "Tom",
+          state: "California",
+          city: "Los Angeles",
+          address: "No. 189, Grove St, Los Angeles",
+          zip: "CA 90036",
+        },
+        {
+          date: "2016-05-08",
+          name: "Tom",
+          state: "California",
+          city: "Los Angeles",
+          address: "No. 189, Grove St, Los Angeles",
+          zip: "CA 90036",
+        },
+        {
+          date: "2016-05-06",
+          name: "Tom",
+          state: "California",
+          city: "Los Angeles",
+          address: "No. 189, Grove St, Los Angeles",
+          zip: "CA 90036",
+        },
+        {
+          date: "2016-05-07",
+          name: "Tom",
+          state: "California",
+          city: "Los Angeles",
+          address: "No. 189, Grove St, Los Angeles",
+          zip: "CA 90036",
         },
       ],
       formData: [

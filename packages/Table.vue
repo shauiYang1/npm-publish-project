@@ -3,45 +3,17 @@
     <el-table
       ref="TableRef"
       v-bind="$attrs"
-      :data="tableData"
+      :data="fetchPage ? tableData : data"
       :loading="loading"
       :height="tableHeight"
       :row-class-name="rowClassName"
       tooltip-effect="light tit-tip"
     >
-      <template v-for="(column, index) in columns">
-        <el-table-column
-          :key="column.dataIndex"
-          :prop="column.dataIndex"
-          :label="column.label"
-          :type="column.type"
-          :width="column.width"
-          :fixed="column.fixed"
-          :min-width="column.minWidth"
-          v-if="column.render"
-        >
-          <template v-slot="scope">
-            <OptionContent
-              :option="column"
-              :row="scope.row"
-              v-if="column.render"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          v-else
-          :key="column.dataIndex + index"
-          :prop="column.dataIndex"
-          :label="column.label"
-          :type="column.type"
-          :width="column.width"
-          :index="indexMethod"
-          :formatter="column.format || format"
-          :fixed="column.fixed"
-          :min-width="column.minWidth"
-          :show-overflow-tooltip="column['show-overflow-tooltip'] || false"
-        />
-      </template>
+      <TableColumnUi
+        v-for="column in columns"
+        :column="column"
+        :key="column.dataIndex"
+      />
     </el-table>
     <div class="bottom-pagination" v-if="total > 20">
       <el-pagination
@@ -57,6 +29,8 @@
   </div>
 </template>
 <script>
+import TableColumnUi from "./TableColumn.vue";
+
 const debounce = (func, wait = 300) => {
   let timer;
   return function () {
@@ -82,21 +56,17 @@ export default {
       type: Function,
       default: () => {},
     },
+    data: {
+      type: Array,
+      default: () => [],
+    },
     params: {
       type: Object,
       default: () => {},
     }, // 表单搜索条件
   },
   components: {
-    OptionContent: {
-      props: {
-        option: Object,
-        row: Object,
-      },
-      render(h) {
-        return this.option.render && this.option.render(h, this.row);
-      },
-    },
+    TableColumnUi,
   },
   computed: {
     tableHeight() {
@@ -151,11 +121,6 @@ export default {
     sizeChange(val) {
       this.page.pageSize = val;
     },
-    indexMethod(idx) {
-      const cacheIdx = (this.page.page - 1) * this.page.pageSize;
-      const curIdx = idx + 1;
-      return cacheIdx + curIdx;
-    },
     refresh(isResetFetch = false) {
       if (isResetFetch) {
         this.page = {
@@ -171,12 +136,6 @@ export default {
       isResetFetch
         ? this.debounceFetchTableData(this.page)
         : this.debounceFetchTableData();
-    },
-    format(row, column, cellValue, index) {
-      if (["", null, undefined].includes(cellValue)) {
-        return "--";
-      }
-      return cellValue;
     },
   },
 };

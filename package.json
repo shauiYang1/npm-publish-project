@@ -1,6 +1,6 @@
 {
   "name": "vue-extends-element-ui",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "private": false,
   "main": "packages/index.js",
   "scripts": {
@@ -9,6 +9,9 @@
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
+  "files": [
+    "packages/**/*"
+  ],
   "dependencies": {
     "element-plus": "^2.2.29",
     "vue": "^3.2.45"
